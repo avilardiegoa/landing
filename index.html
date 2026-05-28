@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>BurgerX | Las Mejores Hamburguesas Artesanales en Bogotá</title>
+    <meta name="description" content="Descubre BurgerX. Hamburguesas 100% Angus asadas a la parrilla, ingredientes frescos y el verdadero sabor urbano. Pide a domicilio o visítanos.">
+    <meta name="keywords" content="hamburguesas, burger, comida rápida, restaurante bogotá, angus, comida urbana, a domicilio">
+    <meta name="author" content="AMTECH">
+    
+    <meta property="og:title" content="BurgerX | El verdadero sabor Urbano">
+    <meta property="og:description" content="Carne 100% Angus asada a la parrilla. Conoce nuestro menú y pide ahora.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1500&q=80">
+    <meta property="og:type" content="website">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #ff4757;
+            --primary-dark: #ff2a3d;
+            --dark: #0f1115;
+            --darker: #0a0b0d;
+            --light: #f1f2f6;
+            --gray: #8b92a5;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--dark); color: var(--light); font-size: 15px; overflow-x: hidden; line-height: 1.6; }
+        
+        /* Navegación */
+        nav { position: fixed; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 11, 13, 0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; }
+        .logo { font-size: 2rem; font-weight: 800; color: var(--light); text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+        
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { color: var(--light); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        .menu-btn { display: none; font-size: 1.8rem; color: white; cursor: pointer; }
+
+        /* Botones Globales */
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 35px; background: var(--primary); color: white; text-decoration: none; font-weight: 800; border-radius: 8px; font-size: 1.1rem; transition: 0.3s; border: none; cursor: pointer; }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* Header / Hero */
+        header { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(10, 11, 13, 0.8), rgba(10, 11, 13, 0.9)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1920&q=80') center/cover fixed; padding: 100px 20px 20px; }
+        .hero-content { max-width: 900px; }
+        .hero-content h1 { font-size: 5rem; text-transform: uppercase; margin-bottom: 25px; line-height: 1.1; font-weight: 800; }
+        .hero-content h1 span { color: var(--primary); }
+        .hero-content p { font-size: 1.3rem; color: var(--gray); margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        /* Secciones Generales */
+        .section { padding: 100px 20px; max-width: 1300px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 3rem; color: var(--light); text-transform: uppercase; font-weight: 800; }
+        .section-header p { color: var(--primary); font-weight: 600; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Nosotros */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-text h3 { font-size: 2.2rem; margin-bottom: 20px; }
+        .about-text p { color: var(--gray); margin-bottom: 20px; font-size: 1.1rem; }
+        .about-image { position: relative; }
+        .about-image img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .badge { position: absolute; bottom: -20px; right: -20px; background: var(--primary); padding: 30px; border-radius: 50%; font-weight: 800; font-size: 1.2rem; text-align: center; border: 10px solid var(--dark); }
+
+        /* Menú */
+        .menu-bg { background: var(--darker); }
+        .menu-category { margin-bottom: 50px; }
+        .menu-category h3 { font-size: 2rem; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 30px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .menu-item { display: flex; gap: 20px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .menu-item:hover { border-color: var(--primary); background: rgba(255, 71, 87, 0.05); transform: translateY(-5px); }
+        .menu-item img { width: 100px; height: 100px; border-radius: 10px; object-fit: cover; }
+        .menu-info { flex: 1; }
+        .menu-info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .menu-info h4 { font-size: 1.2rem; font-weight: 600; }
+        .menu-price { color: var(--primary); font-weight: 800; font-size: 1.2rem; }
+        .menu-info p { color: var(--gray); font-size: 0.95rem; }
+
+        /* Testimonios */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card { background: var(--darker); padding: 40px; border-radius: 20px; position: relative; }
+        .fa-quote-left { font-size: 3rem; color: rgba(255, 71, 87, 0.1); position: absolute; top: 20px; right: 30px; }
+        .stars { color: #ffd700; margin-bottom: 15px; }
+        .testimonial-text { font-size: 1.1rem; font-style: italic; margin-bottom: 20px; color: var(--gray); }
+        .customer-info h4 { font-weight: 600; }
+        .customer-info span { color: var(--primary); font-size: 0.9rem; }
+
+        /* FAQ */
+        .faq-bg { background: var(--darker); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .faq-question { width: 100%; text-align: left; padding: 25px; background: rgba(255,255,255,0.02); color: var(--light); font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .faq-question:hover, .faq-question.active { background: rgba(255, 71, 87, 0.1); color: var(--primary); }
+        .faq-answer { padding: 0 25px; background: rgba(255,255,255,0.01); max-height: 0; overflow: hidden; transition: max-height 0.4s ease; color: var(--gray); }
+        .faq-answer p { padding-bottom: 25px; }
+
+        /* Footer & Contacto */
+        footer { background: #050608; border-top: 1px solid rgba(255,255,255,0.05); padding: 80px 20px 30px; }
+        .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; margin-bottom: 60px; }
+        .footer-col h3 { font-size: 1.5rem; margin-bottom: 25px; color: var(--light); }
+        .footer-col p { color: var(--gray); margin-bottom: 15px; display: flex; align-items: center; gap: 15px; }
+        .footer-col i { color: var(--primary); font-size: 1.2rem; }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a { width: 45px; height: 45px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--light); text-decoration: none; transition: 0.3s; font-size: 1.2rem; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-5px); }
+        
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--gray); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .amtech-badge { background: rgba(255,255,255,0.03); padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.05); }
+        .amtech-badge span { color: #6366f1; font-weight: 800; letter-spacing: 1px; }
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .badge { right: 50%; transform: translateX(50%); }
+            .hero-content h1 { font-size: 4rem; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 15px 25px; }
+            .menu-btn { display: block; }
+            .nav-links { display: flex; flex-direction: column; position: absolute; top: -500px; left: 0; width: 100%; background: rgba(10, 11, 13, 0.98); padding: 30px 0; text-align: center; transition: 0.4s; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .nav-links.active { top: 100%; }
+            .hero-content h1 { font-size: 3rem; }
+            .section { padding: 70px 20px; }
+            .section-header h2 { font-size: 2.2rem; }
+            .menu-item { flex-direction: column; text-align: center; }
+            .menu-item img { width: 100%; height: 200px; }
+            .menu-info-header { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">Burger<span>X</span></a>
+        <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#testimonios">Testimonios</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header id="inicio">
+        <div class="hero-content">
+            <h1>Cero Reglas.<br><span>Puro Sabor.</span></h1>
+            <p>Carne 100% Angus asada a la parrilla, pan brioche artesanal horneado a diario y vegetales frescos. No hacemos comida rápida, hacemos buenas hamburguesas lo más rápido posible.</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn"><i class="fa-solid fa-burger"></i> Ver Menú</a>
+                <a href="https://wa.me/573000000000?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Pedir Domicilio</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="nosotros" class="section">
+        <div class="about-grid">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1586816001966-79b736744398?auto=format&fit=crop&w=800&q=80" alt="Parrilla BurgerX">
+                <div class="badge">Desde<br>2018</div>
+            </div>
+            <div class="about-text">
+                <div class="section-header" style="text-align: left; margin-bottom: 20px;">
+                    <p>La Experiencia X</p>
+                    <h2 style="font-size: 2.5rem;">Artesanos de la Parrilla</h2>
+                </div>
+                <p>Todo empezó en un pequeño garaje en Bogotá con una misión simple: rescatar el verdadero sabor de la hamburguesa clásica americana, pero con el toque urbano de nuestra ciudad.</p>
+                <p>Nuestra carne nunca se congela. Molemos nuestros propios cortes de res Angus todos los días para garantizar la máxima jugosidad. Nuestras salsas son recetas secretas de la casa y nuestro pan brioche se sella con mantequilla de ajo antes de cada orden.</p>
+                <ul style="list-style: none; margin-top: 30px;">
+                    <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fa-solid fa-fire" style="color: var(--primary); margin-right: 15px;"></i> Parrilla de leña y carbón</li>
+                    <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fa-solid fa-leaf" style="color: var(--primary); margin-right: 15px;"></i> Vegetales de huertos locales</li>
+                    <li style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fa-solid fa-truck-fast" style="color: var(--primary); margin-right: 15px;"></i> Empaques eco-amigables</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="section menu-bg">
+        <div class="section-header">
+            <p>Descubre tu favorita</p>
+            <h2>Menú Principal</h2>
+        </div>
+
+        <div class="menu-category">
+            <h3>Hamburguesas Premium</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80" alt="Classic X">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>Classic X</h4>
+                            <span class="menu-price">$18.000</span>
+                        </div>
+                        <p>Carne Angus 150g, queso cheddar americano, lechuga romana, tomate fresco y salsa X.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=300&q=80" alt="Bacon Beast">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>La Bestia Ahumada</h4>
+                            <span class="menu-price">$25.000</span>
+                        </div>
+                        <p>Doble carne Angus, triple tocino ahumado en madera de manzano, cebolla caramelizada y BBQ.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80" alt="Crispy Chicken">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>Chicken Crispy</h4>
+                            <span class="menu-price">$21.000</span>
+                        </div>
+                        <p>Pechuga marinada y frita al estilo sureño, pepinillos dulces y mayonesa de ajo asado.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=300&q=80" alt="Truffle Mushroom">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>Truffle Mushroom</h4>
+                            <span class="menu-price">$28.000</span>
+                        </div>
+                        <p>Carne Angus, queso suizo fundido, champiñones salteados y mayonesa de trufa negra.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Acompañamientos</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1576107232684-1279f3908581?auto=format&fit=crop&w=300&q=80" alt="Papas">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>Papas Rústicas</h4>
+                            <span class="menu-price">$8.000</span>
+                        </div>
+                        <p>Papas cortadas a mano, fritas con piel y sazonadas con paprika y sal marina.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=300&q=80" alt="Onion Rings">
+                    <div class="menu-info">
+                        <div class="menu-info-header">
+                            <h4>Aros de Cebolla</h4>
+                            <span class="menu-price">$10.000</span>
+                        </div>
+                        <p>Aros crujientes empanizados en cerveza artesanal. Incluye salsa ranch.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="section">
+        <div class="section-header">
+            <p>La Voz del Barrio</p>
+            <h2>¿Qué dicen nuestros clientes?</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <i class="fa-solid fa-quote-left"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">"La mejor hamburguesa que me he comido en Bogotá. La carne es súper jugosa y el pan no se deshace. El domicilio llegó rápido y caliente."</p>
+                <div class="customer-info">
+                    <h4>Carlos Rodríguez</h4>
+                    <span>Cliente Frecuente</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fa-solid fa-quote-left"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Tienen que probar La Bestia Ahumada. Es una locura el sabor del tocino. El local tiene un ambiente excelente y la música está 10/10."</p>
+                <div class="customer-info">
+                    <h4>Andrea Gómez</h4>
+                    <span>Local Guide</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <i class="fa-solid fa-quote-left"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <p class="testimonial-text">"Excelente calidad-precio. Las papas rústicas son obligatorias. Fui el fin de semana y estaba lleno, pero la atención fue rapidísima."</p>
+                <div class="customer-info">
+                    <h4>Felipe Martínez</h4>
+                    <span>Food Blogger</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section faq-bg">
+        <div class="section-header">
+            <p>Resolvemos tus dudas</p>
+            <h2>Preguntas Frecuentes</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Cuál es el área de cobertura para domicilios?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Actualmente cubrimos el norte y centro de Bogotá (desde la Calle 26 hasta la Calle 170). Si estás fuera de nuestra zona, puedes pedir a través de plataformas aliadas como Rappi.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Tienen opciones vegetarianas o veganas?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>¡Sí! Tenemos la 'Veggie X', hecha con un medallón a base de proteína de arveja, lentejas y especias, acompañada de queso vegano y pan sin lácteos.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Aceptan reservas para grupos grandes?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Aceptamos reservas para grupos de más de 8 personas de lunes a jueves. Los fines de semana atendemos por orden de llegada para mantener un flujo rápido.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ¿Son Pet Friendly?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>¡Totalmente! Amamos a los peludos. Tenemos una terraza amplia donde tu mascota será bienvenida e incluso le ofreceremos agua fresca.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="#" class="logo" style="display: block; margin-bottom: 20px;">Burger<span>X</span></a>
+                <p style="color: var(--gray);">No es comida rápida, es buena comida hecha rápidamente. El verdadero sabor urbano está aquí.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Contacto</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Calle 85 #11-53, Bogotá, Colombia</p>
+                <p><i class="fa-brands fa-whatsapp"></i> +57 300 000 0000</p>
+                <p><i class="fa-solid fa-envelope"></i> pedidos@burgerx.co</p>
+            </div>
+            <div class="footer-col">
+                <h3>Horarios</h3>
+                <p>Lunes - Miércoles:<br> 12:00 PM - 10:00 PM</p>
+                <p>Jueves - Sábado:<br> 12:00 PM - 12:00 AM</p>
+                <p>Domingos y Festivos:<br> 12:00 PM - 9:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BurgerX. Todos los derechos reservados.</p>
+            <div class="amtech-badge">
+                Desarrollado con alta tecnología por <span>AMTECH</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Menú Móvil
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if(navLinks.classList.contains('active')){
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.querySelector('i').classList.remove('fa-xmark');
+                menuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        // 2. Acordeón FAQ
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Cerrar otras respuestas abiertas
+                faqQuestions.forEach(otherQuestion => {
+                    if (otherQuestion !== question) {
+                        otherQuestion.classList.remove('active');
+                        otherQuestion.nextElementSibling.style.maxHeight = null;
+                        otherQuestion.querySelector('i').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle la actual
+                question.classList.toggle('active');
+                if (question.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                }
+                
+                icon.style.transition = 'transform 0.3s ease';
+            });
+        });
+    </script>
+</body>
+</html>
